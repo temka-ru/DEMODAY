@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEMO DAY</title>
+</head>
+
+<body>
+    <script>
+        let M = +prompt("Введите размерность квадратной матрицы E", "M");
+        let N = +prompt("Введите размерность квадратной матрицы F", "N");
+
+    // Проверка на четность
+        if (N % 2 != 0 || M % 2 != 0) {
+            alert("Размерность матриц должна быть четной");
+        }
+        else {
+
+            // матрица E
+            let E = new Array(M);
+            for (let i = 0; i < M; i++) {
+                E[i] = new Array(M);
+            }
+
+            for (let i = 0; i < M; i++) {
+                for (let j = 0; j < M; j++) {
+                    E[i][j] = Math.floor(Math.random() * 10);
+                }
+            }
+
+
+            // Массив содержащий в себе произведение всех элементов каждого столбца матрицы E
+            let multArr = [];
+            let mult = 1;
+            for (let i = 0; i < M; i++) {
+                mult = 1;
+                for (let j = 0; j < M; j++) {
+                    mult *= E[j][i];
+                }
+                multArr.push(mult);
+            }
+
+            // матрица F
+            let F = new Array(N);
+            for (let i = 0; i < N; i++) {
+                F[i] = new Array(N);
+            }
+            for (let i = 0; i < N; i++) {
+                for (let j = 0; j < N; j++)
+                    F[i][j] = Math.floor(Math.random() * 10);
+            }
+
+            // Массив содержащий в себе сумму всех элементов каждой строки матрицы F
+            let sumArr = [];
+            let sum = 0;
+            for (let i = 0; i < N; i++) {
+                sum = 0;
+                for (let j = 0; j < N; j++) {
+                    sum += F[i][j];
+                }
+                sumArr.push(sum);
+            }
+
+            // матрица EE с отсортированной диагоналю 
+            let EE = new Array(M);
+            for (let i = 0; i < M; i++) {
+                EE[i] = new Array(M);
+                for (let j = 0; j < M; j++)
+                    EE[i][j] = E[i][j];
+            }
+            let p = 1;
+            while (p != 0) {
+                p = 0;
+                for (let i = 1; i < M; i++) {
+                    if (EE[i - 1][i - 1] > EE[i][i]) {
+                        tmp = EE[i][i];
+                        EE[i][i] = EE[i - 1][i - 1];
+                        EE[i - 1][i - 1] = tmp;
+                        p++
+                    }
+                }
+            }
+
+            // матрица FF с отсортированной диагоналю 
+            let FF = new Array(N);
+            for (let i = 0; i < N; i++) {
+                FF[i] = new Array(N);
+                for (let j = 0; j < N; j++)
+                    FF[i][j] = F[i][j];
+            }
+            let p1 = 1;
+            while (p1 != 0) {
+                p1 = 0;
+                for (let i = 1; i < N; i++) {
+                    if (FF[i - 1][i - 1] > FF[i][i]) {
+                        tmp = FF[i][i];
+                        FF[i][i] = FF[i - 1][i - 1];
+                        FF[i - 1][i - 1] = tmp;
+                        p1++
+                    }
+                }
+            }
+
+
+            let E1 = new Array(M);
+            for (let i = 0; i < M; i++) {
+                E1[i] = new Array(M);
+                for (let j = 0; j < M; j++)
+                    E1[i][j] = EE[i][j] - multArr[j];
+            }
+
+            let F1 = new Array(N);
+            for (let i = 0; i < N; i++) {
+                F1[i] = new Array(N);
+                for (let j = 0; j < N; j++)
+                    F1[i][j] = FF[i][j] + sumArr[i];
+            }
+
+
+            console.log("Матрица E");
+            console.log(E);
+            console.log("Произведение элементов каждого столбца матрицы E");
+            console.log(multArr);
+            console.log("Матрица EE");
+            console.log(EE);
+            console.log("Результирующая E1");
+            console.log(E1);
+
+            console.log("Матрица F");
+            console.log(F);
+            console.log("Сумма элементов каждой строки матрицы F");
+            console.log(sumArr);
+            console.log("Матрица FF");
+            console.log(FF);
+            console.log("Результирующая F1");
+            console.log(F1);
+
+
+            document.write("МАТРИЦА E1<br>");
+            for (let i = 0; i < M; i++) {
+                for (let j = 0; j < M; j++) {
+                    document.write(E1[i][j] + " ");
+                };
+                document.write("<br>");
+            };
+
+            document.write("<br>");
+            document.write("МАТРИЦА F1<br>");
+
+            for (let i = 0; i < N; i++) {
+                for (let j = 0; j < N; j++) {
+                    document.write(F1[i][j] + " ");
+                };
+                document.write("<br>");
+            };
+
+            document.write("<br>");
+            };
+    </script>
+</body>
+
+</html>
+
